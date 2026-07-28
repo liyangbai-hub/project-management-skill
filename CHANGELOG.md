@@ -6,7 +6,6 @@ All notable user-visible changes to this project will be documented in this file
 
 ### Added
 
-- A bilingual, dependency-free GitHub Pages landing page with in-page language switching.
 - Repository portability files, complete Mode 1 examples, and representative macOS validation evidence.
 - A single maintenance checklist covering static checks, evaluations, handoff acceptance, cross-platform evidence, and fresh-computer usability.
 - A modular formal specification consisting of `SKILL.md` and focused files in `references/`.
@@ -25,6 +24,7 @@ All notable user-visible changes to this project will be documented in this file
 
 ### Removed
 
+- The standalone GitHub Pages landing page, deployment marker, and README navigation entries.
 - Maintainer-only publication instructions, related public-documentation references, and publication-specific troubleshooting.
 - Every dependency on an external workflow, plugin, or additional skill; the repository is now self-contained.
 - Duplicated specification content: one AUDIT record structure, one Mode 2 delivery-report definition, and one place for platform status.

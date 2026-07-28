@@ -8,10 +8,10 @@
 
 修改任何文件后适用：
 
-- 仓库必需文件存在：`SKILL.md`、四份 `references/*.md`、两份 README、`index.html`、`LICENSE`、`AGENTS.md`、`CLAUDE.md`、`CHANGELOG.md`、`CONTRIBUTING.md`、`docs/`、`examples/`、`evals/evals.json`。
+- 仓库必需文件存在：`SKILL.md`、四份 `references/*.md`、两份 README、`LICENSE`、`AGENTS.md`、`CLAUDE.md`、`CHANGELOG.md`、`CONTRIBUTING.md`、`docs/`、`examples/`、`evals/evals.json`。
 - `SKILL.md` 的 YAML frontmatter 可解析，且包含 `name: project-management` 与非空 `description`。
 - `SKILL.md` 引用的每个 `references/*.md` 都存在。
-- 全部 Markdown 相对链接和 `index.html` 的本地链接可解析。
+- 全部 Markdown 相对链接可解析。
 - 文本为严格 UTF-8、无 BOM、LF 行尾。
 - 关键文件大小写精确：`SKILL.md`、`AGENTS.md`、`CLAUDE.md`、`README.md`、`DEVLOG.md`、`CHANGELOG.md`、`AUDIT.md`。
 - 只有 `SKILL.md` 与 `references/*.md` 声明正式行为，人类文档没有变成第二套执行规范。
@@ -57,7 +57,7 @@ Agent B 还须回到实际代码与配置核验关键结论，不把文档声明
 
 ## 四、跨平台检查
 
-在目标平台实际执行时记录：安装方式（Git clone、ZIP、手工复制）、安装层级（个人级或项目级）、中文与空格路径、大小写与行尾表现、模式二源项目内容哈希不变、README 与 Pages 链接、是否依赖符号链接。
+在目标平台实际执行时记录：安装方式（Git clone、ZIP、手工复制）、安装层级（个人级或项目级）、中文与空格路径、大小写与行尾表现、模式二源项目内容哈希不变、README 链接、是否依赖符号链接。
 
 没有真实设备时保留“未执行”状态，不用静态分析或模拟替代实测。现有证据见 [Windows 验证](validation-windows.md) 与 [macOS 验证](validation-macos.md)。
 

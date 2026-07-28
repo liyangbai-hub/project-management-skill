@@ -9,8 +9,7 @@
 
 <p>
   <a href="README.md">English</a> ·
-  <strong>简体中文</strong> ·
-  <a href="https://liyangbai-hub.github.io/project-management-skill/">中英双语网页</a>
+  <strong>简体中文</strong>
 </p>
 
 <p>
@@ -23,10 +22,9 @@
 <p>
   <a href="docs/validation-windows.md"><img alt="Windows representative validation: passed" src="https://img.shields.io/badge/Windows-representative_check_passed-2563EB?style=flat-square&logo=windows11&logoColor=white"></a>
   <a href="docs/validation-macos.md"><img alt="macOS representative validation: passed" src="https://img.shields.io/badge/macOS-representative_check_passed-111827?style=flat-square&logo=apple&logoColor=white"></a>
-  <a href="https://liyangbai-hub.github.io/project-management-skill/"><img alt="GitHub Pages status" src="https://img.shields.io/website?url=https%3A%2F%2Fliyangbai-hub.github.io%2Fproject-management-skill%2F&up_message=online&down_message=offline&style=flat-square&label=Pages"></a>
 </p>
 
-### [🌐 打开双语网站](https://liyangbai-hub.github.io/project-management-skill/) · [⚡ 立即安装](#立即安装) · [🧭 查看三种模式](#三种模式)
+### [⚡ 立即安装](#立即安装) · [🧭 查看三种模式](#三种模式)
 
 </div>
 

@@ -1,6 +1,6 @@
 # Project Management Skill
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [Interactive bilingual website](https://liyangbai-hub.github.io/project-management-skill/)
+[English](README.md) · [简体中文](README.zh-CN.md)
 
 > **Your project should not die in a chat history.**
 >
@@ -17,7 +17,7 @@ Does a new Agent have to rediscover your goals, architecture, and unfinished wor
 
 **Project Management Skill moves durable project memory back where it belongs: inside the project folder.** The next Agent reads the same local facts, verifies important claims against the actual project, and continues from a clear handoff point—even without access to the previous chat.
 
-**[Open the bilingual website](https://liyangbai-hub.github.io/project-management-skill/)** · **[Install now](docs/installation.en.md)** · **[See the three modes](#three-modes)**
+**[Install now](docs/installation.en.md)** · **[See the three modes](#three-modes)**
 
 ## Two core ideas
 
