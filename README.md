@@ -75,7 +75,7 @@ In text: determine the user's intent and authorization boundary, select the rele
 ## Quick start
 
 1. Install this repository as a Claude Code skill so `SKILL.md` is directly inside the `project-management` skill directory.
-2. Start a new Claude Code session if your installed version does not refresh skill discovery automatically.
+2. Changes inside an already discovered skill directory normally take effect in the current Claude Code session. If the top-level skills directory did not exist when the session started and was just created, open a new session if discovery does not refresh.
 3. Describe the project-level outcome you want. For example:
 
 ```text
@@ -113,6 +113,13 @@ Project-level installation:
 <project-root>/.claude/skills/project-management/
 ```
 
+Personal Git clone:
+
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.claude/skills/project-management"
+```
+
 The installed directory must directly contain `SKILL.md` and `references/`. Avoid an extra repository nesting level such as `project-management/project-management-skill/SKILL.md`.
 
 See the complete guides:
@@ -126,7 +133,16 @@ Git is optional. ZIP download and manual copying are supported. The core behavio
 
 ## Codex and other Agents
 
-Managed projects use `AGENTS.md` as the tool-neutral handoff entry. Codex skill discovery and installation locations may change by version, so this repository does not guess a personal or project-level Codex skill path. Check the official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills) for the installed version.
+Managed projects use `AGENTS.md` as the tool-neutral handoff entry. Current Codex documentation uses `$HOME/.agents/skills/project-management/` for personal skills, `<project-root>/.agents/skills/project-management/` for repository skills, and `/etc/codex/skills/project-management/` for administrator-provided skills.
+
+Personal Git clone:
+
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.agents/skills/project-management"
+```
+
+Some existing versions or older installations may still use `~/.codex/skills/project-management/`; treat it as a compatibility location rather than the preferred current path. Check the official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills) for the installed version. Codex detects local skill changes automatically; restart it only if an update does not appear.
 
 If an adapter is needed, prefer a thin entry layer that points to this repository instead of copying the full behavioral specification. Full Codex real-environment validation is still pending.
 

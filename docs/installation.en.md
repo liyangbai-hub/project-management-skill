@@ -49,19 +49,21 @@ Do not confuse the skill installation with the managed project's fact-layer file
 
 Git is optional. If it is available, clone the repository into the target skill directory or clone elsewhere and copy the repository contents into that directory.
 
-macOS example:
+macOS and Linux example:
 
-```sh
-git clone <repository-url> ~/.claude/skills/project-management
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.claude/skills/project-management"
 ```
 
 Windows PowerShell example:
 
 ```powershell
-git clone <repository-url> "$HOME\.claude\skills\project-management"
+git clone https://github.com/liyangbai-hub/project-management-skill.git `
+  "$HOME\.claude\skills\project-management"
 ```
 
-These commands are examples only. Creating a local clone does not authorize creating a remote repository, pushing, opening a pull request, or publishing a release.
+If the target directory already exists, inspect it for local changes and choose an explicit backup, comparison, or update strategy instead of cloning over it. Creating a local clone does not authorize creating a remote repository, pushing, opening a pull request, or publishing a release.
 
 ### ZIP download
 
@@ -90,7 +92,7 @@ Perform all applicable checks:
 1. Confirm `SKILL.md` is directly inside the installed `project-management` directory.
 2. Confirm `references/project-templates.md`, `references/migration-copy-mode.md`, `references/audit-checklist.md`, and `references/cross-platform.md` are present.
 3. Confirm the name in the YAML frontmatter is `project-management`.
-4. Restart or open a new Claude Code session if the current version does not refresh skill discovery automatically.
+4. Changes inside an already discovered skill directory normally take effect in the current Claude Code session. If the top-level `~/.claude/skills/` or project `.claude/skills/` directory did not exist when the session started and was just created, open a new session if the skill is not discovered.
 5. Ask for a non-destructive explanation of the skill's three modes, or use Claude Code's current skill-listing mechanism if available in your installed version.
 6. Record the result accurately as passed, failed, not run, environment-limited, or uncertain.
 
@@ -128,9 +130,24 @@ After uninstalling, check for a second personal or project-level installation an
 
 ## Codex and other Agents
 
-`AGENTS.md` is the tool-neutral handoff entry for managed projects. Codex skill discovery and installation locations are version-dependent; this repository intentionally does not guess a personal or project skill path.
+`AGENTS.md` remains the tool-neutral handoff entry for managed projects. Current Codex documentation lists these local skill locations:
 
-Consult the current official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills) for the installed version, then verify its documented directory and discovery behavior. If an adapter is needed, prefer a thin entry layer that points to this repository rather than maintaining a duplicate behavioral specification.
+| Scope | Target directory |
+|---|---|
+| Personal | `$HOME/.agents/skills/project-management/` |
+| Repository | `<project-root>/.agents/skills/project-management/` |
+| Administrator | `/etc/codex/skills/project-management/` |
+
+Personal Git clone example:
+
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.agents/skills/project-management"
+```
+
+Some existing Codex versions or older local setups may still load skills from `~/.codex/skills/project-management/`. Treat that as compatibility guidance, not the preferred current location. Check the official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills) for your installed version and verify discovery with `/skills` or explicit `$project-management` invocation. Codex detects local skill changes automatically; if an update is not visible, restart Codex.
+
+If an adapter is needed, prefer a thin entry layer that points to this repository rather than maintaining a duplicate behavioral specification.
 
 Codex compatibility has not been fully tested unless a release record explicitly names the tested Codex version, environment, discovery method, and scenarios.
 
@@ -140,4 +157,4 @@ Codex compatibility has not been fully tested unless a release record explicitly
 - **macOS:** representative filesystem, symlink path-safety, encoding, and installation-structure checks passed on macOS 26.5.2 (arm64) with Claude Code 2.1.220. Dynamic skill discovery and full three-mode execution were not run. See [macOS validation](validation-macos.md).
 - **Codex:** designed around `AGENTS.md` and conservative skill integration; full real-environment validation remains pending.
 
-See [Troubleshooting](troubleshooting.md) for discovery, nesting, casing, encoding, permission, and cleanup problems. Repository owners preparing an external GitHub upload can also consult the Chinese [GitHub publishing guide](github-publishing.zh-CN.md); reading it does not authorize creating a remote, pushing, or publishing a Release.
+See [Troubleshooting](troubleshooting.md) for discovery, nesting, casing, encoding, permission, and cleanup problems.

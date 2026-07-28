@@ -67,7 +67,7 @@ Record failures, skipped checks, environment limitations, and uncertainty honest
 
 A contribution guide does not authorize any remote action. Creating forks, branches, commits, pushes, pull requests, Releases, or other publication remains an explicit action by the contributor or repository owner. Automated Agents must obtain the user's authorization before performing outward-facing operations.
 
-Repository owners can use the Chinese [GitHub publishing guide](docs/github-publishing.zh-CN.md) for web upload, Git CLI publication, repository settings, and optional Release gates. Contributors do not need GitHub CLI; ordinary Git or GitHub's web interface is sufficient when the corresponding external action is authorized.
+Contributors do not need GitHub CLI; ordinary Git or GitHub's web interface is sufficient when the corresponding external action is authorized.
 
 ## License
 

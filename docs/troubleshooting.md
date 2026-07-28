@@ -11,7 +11,7 @@ Check in this order:
 3. Confirm `SKILL.md` is directly inside that directory.
 4. Open `SKILL.md` and confirm its YAML frontmatter contains `name: project-management`.
 5. Confirm the file is readable and was not saved as `SKILL.md.txt`.
-6. Start a new Claude Code session if the installed version does not refresh discovery dynamically.
+6. If the top-level skills directory did not exist when the current Claude Code session started and was just created, start a new session. Changes inside an already discovered skill directory normally take effect without restarting.
 7. Check current Claude Code documentation or built-in help for version-specific discovery behavior.
 
 Do not solve discovery failures by guessing another product's directory or by creating unverified symbolic links.
@@ -110,7 +110,15 @@ Missing Git does not block the local fact layer and does not authorize `git init
 
 ## Codex installation path is uncertain
 
-Do not reuse Claude Code paths or infer a Codex path from third-party examples. Open the current official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills), note the product/version being used, and follow its documented discovery rules.
+Do not reuse Claude Code paths or infer a Codex path from third-party examples. Current official Codex documentation uses:
+
+```text
+$HOME/.agents/skills/project-management/
+<project-root>/.agents/skills/project-management/
+/etc/codex/skills/project-management/
+```
+
+Some existing versions or older installations may still use `~/.codex/skills/project-management/`; treat it as a compatibility location, not the preferred current path. Open the current official [OpenAI Codex Skills documentation](https://developers.openai.com/codex/skills), note the product/version being used, and follow its documented discovery rules. Codex normally detects local skill changes automatically; restart only if the update does not appear.
 
 `AGENTS.md` remains the tool-neutral project handoff entry even when automatic skill discovery is unavailable. Unless real Codex installation and representative scenarios were executed and recorded, report Codex status as designed for compatibility or pending validation—not fully tested.
 
@@ -170,15 +178,3 @@ Before publishing a compatibility statement, record:
 | Codex tested | Actual Codex version, documented install path, discovery result, and representative scenarios |
 
 If the required evidence is absent, narrow the claim rather than upgrading the status.
-
-## GitHub publication fails or targets the wrong repository
-
-Before retrying any outward-facing operation:
-
-1. Stop and inspect `git status`, the current branch, and `git remote -v`.
-2. Confirm the intended owner, repository name, visibility, and exact remote URL.
-3. Confirm the files and commits to be uploaded contain no secrets or private history.
-4. Do not overwrite an existing `origin`, force-push, bypass hooks, or delete a remote repository as a troubleshooting shortcut.
-5. Obtain fresh authorization if the proposed recovery changes the previously approved remote, branch, visibility, or publication scope.
-
-A local commit succeeding does not prove a push occurred. A push succeeding does not prove README links, Release assets, visibility, or platform claims are correct. Validate each outcome separately. See the [GitHub publishing guide](github-publishing.zh-CN.md) for the complete publication sequence.

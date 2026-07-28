@@ -45,19 +45,21 @@ $HOME\.claude\skills\project-management\
 
 Git 是可选工具。若当前环境有 Git，可直接克隆到目标技能目录，也可先克隆到其他位置，再复制仓库内容。
 
-macOS 示例：
+macOS 与 Linux 示例：
 
-```sh
-git clone <repository-url> ~/.claude/skills/project-management
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.claude/skills/project-management"
 ```
 
 Windows PowerShell 示例：
 
 ```powershell
-git clone <repository-url> "$HOME\.claude\skills\project-management"
+git clone https://github.com/liyangbai-hub/project-management-skill.git `
+  "$HOME\.claude\skills\project-management"
 ```
 
-命令只作示例。克隆本地仓库不代表获准创建远程仓库、push、创建 PR 或发布 Release。
+若目标目录已经存在，先检查本地改动，并明确选择备份、比较或更新策略，不要直接覆盖。克隆本地仓库不代表获准创建远程仓库、push、创建 PR 或发布 Release。
 
 ### 使用 ZIP
 
@@ -90,7 +92,7 @@ git clone <repository-url> "$HOME\.claude\skills\project-management"
    - `references/audit-checklist.md`
    - `references/cross-platform.md`
 3. 确认 YAML frontmatter 中的名称为 `project-management`。
-4. 如果当前 Claude Code 版本不会自动刷新技能发现，重新打开一个会话。
+4. 已被发现的技能目录中发生增删改时，Claude Code 通常会在当前会话实时生效。如果会话启动时顶层 `~/.claude/skills/` 或项目 `.claude/skills/` 尚不存在，而本次才首次创建，技能没有出现时请重新打开会话。
 5. 请求 Agent 只读说明技能的三个模式，或使用当前 Claude Code 版本提供的技能列表机制检查发现情况。
 6. 将结果如实记录为通过、失败、未执行、环境受限或结果不确定。
 
@@ -128,9 +130,24 @@ git clone <repository-url> "$HOME\.claude\skills\project-management"
 
 ## Codex 与其他 Agent
 
-`AGENTS.md` 是受管项目的工具中立接力入口。Codex 的技能发现与安装位置可能随版本变化，本仓库不猜测个人级或项目级技能目录。
+`AGENTS.md` 仍是受管项目的工具中立接力入口。当前 Codex 官方文档列出的本地技能位置如下：
 
-请查看当前版本对应的 OpenAI 官方 [Codex Skills 文档](https://developers.openai.com/codex/skills)，按官方说明核对目录和发现行为。确需适配层时，优先建立指向本仓库的薄入口，不复制完整行为规范。
+| 范围 | 目标目录 |
+|---|---|
+| 个人级 | `$HOME/.agents/skills/project-management/` |
+| 仓库级 | `<project-root>/.agents/skills/project-management/` |
+| 管理员级 | `/etc/codex/skills/project-management/` |
+
+个人级 Git clone 示例：
+
+```bash
+git clone https://github.com/liyangbai-hub/project-management-skill.git \
+  "$HOME/.agents/skills/project-management"
+```
+
+部分现有 Codex 版本或较早的本地安装仍可能从 `~/.codex/skills/project-management/` 加载技能。请把它视为兼容位置，而不是当前首选路径。按已安装版本查看 OpenAI 官方 [Codex Skills 文档](https://developers.openai.com/codex/skills)，并通过 `/skills` 或显式输入 `$project-management` 核验发现情况。Codex 会自动检测本地技能变化；若更新没有出现，再重启 Codex。
+
+确需适配层时，优先建立指向本仓库的薄入口，不复制完整行为规范。
 
 除非发布记录明确列出真实测试的 Codex 版本、环境、发现方式和场景，否则不得宣传为已经完成 Codex 全面实测。
 
@@ -140,4 +157,4 @@ git clone <repository-url> "$HOME\.claude\skills\project-management"
 - **macOS：** 已在 macOS 26.5.2（arm64）+ Claude Code 2.1.220 完成代表性文件系统、符号链接路径安全、编码和安装结构验证；动态技能发现与三个模式的完整执行未运行。见 [macOS 验证记录](validation-macos.md)。
 - **Codex：** 围绕 `AGENTS.md` 和保守的技能集成原则设计；真实环境完整验证待完成。
 
-发现、嵌套、大小写、编码、权限或卸载残留问题见[故障排查](troubleshooting.md)。准备把本地仓库上传到 GitHub 时，另见 [GitHub 发布指南](github-publishing.zh-CN.md)；阅读指南不构成创建远程仓库、push 或 Release 的授权。
+发现、嵌套、大小写、编码、权限或卸载残留问题见[故障排查](troubleshooting.md)。

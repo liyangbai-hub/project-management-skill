@@ -87,4 +87,4 @@ ai-coding
 developer-tools
 ```
 
-首个正式版本可考虑 `v1.0.0`，但只在适用验证完成并获得所有者明确授权后创建 tag 和 Release。发布流程见 [GitHub 发布指南](github-publishing.zh-CN.md)。
+首个正式版本可考虑 `v1.0.0`，但只在适用验证完成并获得所有者明确授权后创建 tag 和 Release。
