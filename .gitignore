@@ -1,0 +1,29 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary and local validation output
+.tmp/
+tmp/
+*.tmp
+*.log
+coverage/
+.render-check.json
+
+# Environment files containing real local values
+.env
+.env.*
+!.env.example

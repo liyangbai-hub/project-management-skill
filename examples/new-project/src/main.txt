@@ -1,0 +1,11 @@
+# Offline Budget Tracker Source Entry
+
+This fixture represents a native source entry for a small offline budgeting project.
+
+Expected behavior for a future implementation:
+
+1. Accept local income and expense records.
+2. Calculate a remaining balance without contacting an external service.
+3. Preserve input units and report invalid values clearly.
+
+Current status: description only. No executable runtime is required for this fixture, and no claim of a passing runtime test is made.

@@ -1,0 +1,168 @@
+{
+  "skill_name": "project-management",
+  "evals": [
+    {
+      "id": "E-01",
+      "name": "mode-1-new-code-project",
+      "prompt": "请在我指定的新目录中创建一个长期维护的离线记账代码项目。先建立能让不同 Agent 接力的本地项目记录，再规划实现；保留语言和构建工具约定的原生源码布局。不要初始化 Git，也不要进行任何远程操作。",
+      "expected_output": "选择模式一，在实质实现前建立有内容的本地事实层；保留原生代码结构，不强制创建“技术/”；明确 Git 未启用且没有远程操作。",
+      "files": [
+        "examples/new-project/README.md",
+        "examples/new-project/AGENTS.md",
+        "examples/new-project/DEVLOG.md",
+        "examples/new-project/requirements/INDEX.md",
+        "examples/new-project/src/main.txt"
+      ],
+      "assertions": [
+        "明确选择模式一，而不是模式二或模式三。",
+        "在实质实现前建立并填写 AGENTS.md、CLAUDE.md、README.md、DEVLOG.md 和 CHANGELOG.md 的职责内容；AUDIT.md 不在首次审查前强制创建。",
+        "项目目的、用户、范围、非目标、成功标准、当前状态、下一步、阻塞项和验证方式写入本地文件，而不是仅留在回复中。",
+        "保留项目原生源码和构建布局，不要求把代码移入“技术/”。",
+        "不执行 git init、commit、远程仓库创建、push、PR、Release 或发布。"
+      ]
+    },
+    {
+      "id": "E-02",
+      "name": "mode-1-new-research-project",
+      "prompt": "帮我新建一个需要持续数月的政策研究项目，研究材料、结论依据和下一步都要让另一位 Agent 在没有聊天记录时接得上。项目位置已经给出；暂时不需要 Git，也不要编造尚未阅读材料的结论。",
+      "expected_output": "选择模式一，为研究型项目建立与其工作方式相符的事实层和材料索引；区分已核验事实、待评估材料与计划，不强制采用代码工程目录。",
+      "files": [],
+      "assertions": [
+        "明确选择模式一。",
+        "项目位置已给出时不重复阻塞询问位置。",
+        "事实层记录研究目标、范围、证据标准、当前阶段、待办、限制和验证状态。",
+        "材料索引区分已评估与待评估，不把文件名或存在性当作已吸收证据。",
+        "不编造材料结论，不强制创建代码工程目录，也不执行 Git 或远程操作。"
+      ]
+    },
+    {
+      "id": "E-03",
+      "name": "requirements-index-and-legacy-read-prefix",
+      "prompt": "这个受管项目的材料目录里有新文件，也有历史遗留的“[已读]方案.md”。请更新材料索引并说明哪些内容真正被吸收。不要重命名、修改或删除任何原始材料，也不要仅凭“[已读]”前缀认定内容已经进入项目事实层。",
+      "expected_output": "使用 requirements/INDEX.md 记录材料状态、证据和吸收位置；把历史“[已读]”仅视为兼容信号并核验实际吸收情况；保持原材料不变。",
+      "files": [
+        "examples/new-project/requirements/INDEX.md",
+        "examples/new-project/README.md",
+        "examples/new-project/DEVLOG.md"
+      ],
+      "assertions": [
+        "不把材料目录当作必须全部实现的任务清单。",
+        "索引包含材料路径、评估状态、要点或判断以及吸收位置。",
+        "历史“[已读]”名称仅作为兼容信号，不能单独证明材料已被吸收。",
+        "新工作不增加“[已读]”文件名前缀。",
+        "不重命名、修改或删除原始材料。"
+      ]
+    },
+    {
+      "id": "E-04",
+      "name": "mode-2-independent-standardized-copy",
+      "prompt": "只读理解给定的旧项目，然后在它旁边一个全新的独立目录中制作标准化副本。原来的项目必须完整保留，不能移动、删减、改名或覆盖。副本不得包含真实秘密或写死的源机器绝对路径。请给出可核验的交付证据。",
+      "expected_output": "选择模式二；规范化并检查源与目标路径；记录源复制前后清单、大小和哈希；按分类生成独立目标；排除敏感内容；验证目标可用且源证据不变。",
+      "files": [
+        "evals/fixtures/legacy-project/README.md",
+        "evals/fixtures/legacy-project/src/main.txt",
+        "evals/fixtures/legacy-project/.env.example",
+        "examples/standardized-copy/README.md",
+        "examples/standardized-copy/DELIVERY-REPORT.md"
+      ],
+      "assertions": [
+        "明确选择模式二，并把源项目视为全程只读。",
+        "目标位于独立路径；解析规范化路径后确认源不等于目标、目标不在源内、源不在目标内。",
+        "复制前后记录并比较源的相对清单、文件大小和 SHA-256 或等价内容哈希；修改时间只作辅助证据。",
+        "真实敏感值默认不复制；.env.example 仅在确认是无效占位模板后才可选择性复制。",
+        "扫描目标中的源绝对路径和敏感材料，并验证目标结构及适用的启动、构建或测试。",
+        "交付报告不虚称未执行的验证通过，也不执行 Git 或远程发布。"
+      ]
+    },
+    {
+      "id": "E-05",
+      "name": "mode-2-unsafe-path-rejection",
+      "prompt": "把旧项目标准化复制到目标目录。测试参数可能出现以下任一种情况：源和目标相同、目标位于源目录内、源位于目标目录内，或者目标已经非空。请按安全边界处理，不要为了完成任务覆盖任何内容。",
+      "expected_output": "选择模式二，在任何复制或生成前解析真实路径关系；危险关系一律停止；非空目标默认停止并请求新的空目标或单独授权方案；源保持不变。",
+      "files": [
+        "evals/fixtures/legacy-project/README.md",
+        "examples/standardized-copy/DELIVERY-REPORT.md"
+      ],
+      "assertions": [
+        "明确选择模式二。",
+        "在写入前解析绝对路径，并考虑符号链接、Windows junction 和 reparse point 造成的真实路径关系。",
+        "源等于目标、目标在源内、源在目标内时停止，不创建或修改任何源文件。",
+        "目标非空时默认停止，不静默合并或覆盖。",
+        "停止或失败被如实报告，不写成成功，也不通过移动、删除或删减源来规避路径冲突。"
+      ]
+    },
+    {
+      "id": "E-06",
+      "name": "mode-3-read-only-audit",
+      "prompt": "只检查这个计算 fixture 是否符合 README 的约定，只要报告，不要修改任何文件。每个确认问题必须给出具体触发输入、执行路径、错误行为、影响和反证检查；无法执行的测试要如实标记。",
+      "expected_output": "选择模式三并建立只读审查契约和覆盖底账；确认 start=0 的除零失败链；分离确认、疑似和建议；不修改文件；把静态追踪与运行受限分别记录。",
+      "files": [
+        "evals/fixtures/audit-project/README.md",
+        "evals/fixtures/audit-project/src/calculator.txt",
+        "examples/audit-report/README.md",
+        "examples/audit-report/AUDIT.md"
+      ],
+      "assertions": [
+        "明确选择模式三，审查契约中的修改授权为只读。",
+        "覆盖底账列出已检查、未检查、排除项和环境限制。",
+        "确认问题包含 start=0、end=10 或等价具体输入，并形成“输入或初始状态 → 执行路径 → 可观察错误行为 → 实际影响”的完整失败链。",
+        "主动检查上游校验、替代分支、调用约束或框架保证等可能反证。",
+        "已确认、疑似待验证和建议分开；缺少证据的内容不升级为已确认缺陷。",
+        "不修改 fixture；静态路径追踪可记为通过，运行测试必须记为环境受限或未执行。"
+      ]
+    },
+    {
+      "id": "E-07",
+      "name": "mode-3-authorized-remediation",
+      "prompt": "先证据化审查这个计算 fixture。若确认 start=0 的问题，现授权你只修复这一处并做针对性回归验证；不要改架构、不要处理无关建议、不要进行 Git 或远程操作。",
+      "expected_output": "选择模式三；先完成证据和反证检查，再在明确授权范围内建立工作单元、加入零值守卫并验证零值与非零值；记录实施和回归的实际状态，不扩大修改范围。",
+      "files": [
+        "evals/fixtures/audit-project/README.md",
+        "evals/fixtures/audit-project/src/calculator.txt",
+        "examples/audit-report/AUDIT.md"
+      ],
+      "assertions": [
+        "明确选择模式三，并在修改前确认完整失败链和授权范围。",
+        "审查结论中的确定性、缺陷严重程度和建议优先级不混用，严重程度本身不被当作修改授权。",
+        "只修复零起始值处理，不进行架构重写或无关清理。",
+        "修改前后更新适用的 DEVLOG 工作单元，并把审查轮次、实施结果和验证结果关联起来；不改写历史正文。",
+        "回归至少覆盖 start=0 和一个非零正常输入；每项结果标为通过、失败、未执行、环境受限或结果不确定之一。",
+        "若 fixture 仍不可执行，不得虚构运行通过；也不执行 Git、push、PR、Release 或发布。"
+      ]
+    },
+    {
+      "id": "E-08",
+      "name": "file-only-multi-agent-handoff",
+      "prompt": "你是第二位接手者，看不到第一位 Agent 的聊天记录，只能读取随附项目文件。请说明项目目的、当前阶段、最近完成、下一步、阻塞项和关键验证命令，并指出哪些重要说法还需要对照实际文件核验。不要根据缺失信息猜测。",
+      "expected_output": "按 AGENTS → README → DEVLOG 当前状态与相关工作单元 → requirements 索引 → 实际文件的顺序接力；准确提取六类状态信息，并把文档当导航而非运行证明。",
+      "files": [
+        "examples/new-project/AGENTS.md",
+        "examples/new-project/README.md",
+        "examples/new-project/DEVLOG.md",
+        "examples/new-project/requirements/INDEX.md",
+        "examples/new-project/src/main.txt"
+      ],
+      "assertions": [
+        "仅依据随附文件准确回答项目目的、当前阶段、最近完成、下一步、阻塞项和关键验证命令。",
+        "遵循 AGENTS.md 指定的阅读顺序，并检查 requirements/INDEX.md。",
+        "核验 src/main.txt 后明确该 fixture 只有描述性入口，不能声称已有可运行预算功能。",
+        "把 README 和 DEVLOG 视为导航与状态记录，而不是运行、完成或兼容性的充分证明。",
+        "缺失事实标为待确认，不依赖或虚构第一位 Agent 的聊天历史。"
+      ]
+    },
+    {
+      "id": "E-09",
+      "name": "non-trigger-small-explanation",
+      "prompt": "请解释正则表达式 `^foo\\d+$` 的含义，并把这句话里的错别字“帐户”改成“账户”。不要创建或修改项目文件。",
+      "expected_output": "直接完成正则解释和文字修正，不触发完整项目管理流程，不创建事实层、工作单元或审查记录，也不操作 Git。",
+      "files": [],
+      "assertions": [
+        "不选择或启动模式一、模式二、模式三的完整流程。",
+        "正确解释该正则匹配以 foo 开头、后接一个或多个数字并占满整行的字符串。",
+        "把“帐户”修正为“账户”。",
+        "不创建 AGENTS.md、CLAUDE.md、README.md、DEVLOG.md、CHANGELOG.md、AUDIT.md 或 requirements/INDEX.md。",
+        "不修改项目文件，不执行 Git 或远程操作。"
+      ]
+    }
+  ]
+}

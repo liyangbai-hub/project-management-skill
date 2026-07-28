@@ -1,0 +1,5 @@
+# Legacy Source Entry
+
+Input: one local text value.
+
+Expected behavior: return the same value with surrounding whitespace removed. Empty input returns an empty value. This is a description-only fixture; it has no external runtime.

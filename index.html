@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Keep durable project facts in local files and let multiple AI Agents continue work through a standardized handoff protocol.">
+  <meta name="color-scheme" content="dark">
+  <title>Project Management Skill · 项目管理技能</title>
+  <style>
+    :root {
+      --ink: #f7f7f3;
+      --muted: #b9b9af;
+      --panel: rgba(24, 25, 28, .78);
+      --line: rgba(255, 255, 255, .13);
+      --green: #b7f34a;
+      --orange: #ff7a3d;
+      --violet: #a78bfa;
+      --bg: #090a0c;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(183, 243, 74, .13), transparent 31rem),
+        radial-gradient(circle at 90% 22%, rgba(167, 139, 250, .14), transparent 34rem),
+        radial-gradient(circle at 50% 100%, rgba(255, 122, 61, .10), transparent 33rem),
+        var(--bg);
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 850; letter-spacing: -.02em; text-decoration: none; }
+    .mark { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 11px; background: linear-gradient(135deg, var(--green), var(--violet)); color: #090a0c; font-size: 20px; }
+    .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 4px; background: rgba(255,255,255,.04); }
+    .lang-toggle button { border: 0; border-radius: 999px; padding: 8px 13px; color: var(--muted); background: transparent; cursor: pointer; font: inherit; font-weight: 750; }
+    .lang-toggle button[aria-pressed="true"] { color: #090a0c; background: var(--green); }
+    main { padding: 78px 0 96px; }
+    .eyebrow { margin: 0 0 20px; color: var(--green); font-size: .78rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 900px; margin: 0; font-size: clamp(3rem, 8vw, 7.6rem); line-height: .93; letter-spacing: -.065em; text-wrap: balance; }
+    h1 .accent { color: var(--green); }
+    .lead { max-width: 760px; margin: 30px 0 0; color: var(--muted); font-size: clamp(1.05rem, 2.2vw, 1.35rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 34px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 19px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.06); text-decoration: none; font-weight: 850; }
+    .button.primary { color: #090a0c; background: var(--green); border-color: var(--green); }
+    .button:hover { transform: translateY(-2px); }
+    .pain { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 74px 0 22px; }
+    .pain article, .card { border: 1px solid var(--line); border-radius: 18px; background: var(--panel); backdrop-filter: blur(12px); }
+    .pain article { padding: 22px; min-height: 152px; }
+    .pain strong { display: block; margin-bottom: 9px; font-size: 1.06rem; }
+    .pain p { margin: 0; color: var(--muted); }
+    .section { margin-top: 92px; }
+    .section h2 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1; letter-spacing: -.045em; }
+    .section-intro { max-width: 750px; margin: 0 0 30px; color: var(--muted); }
+    .ideas { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .idea { position: relative; padding: 30px; overflow: hidden; }
+    .idea::after { position: absolute; right: 17px; top: 4px; color: rgba(255,255,255,.07); font-size: 7rem; font-weight: 950; line-height: 1; }
+    .idea:first-child::after { content: "01"; }
+    .idea:last-child::after { content: "02"; }
+    .idea h3 { position: relative; z-index: 1; margin: 0 0 12px; font-size: 1.45rem; }
+    .idea p { position: relative; z-index: 1; margin: 0; color: var(--muted); }
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .mode { padding: 25px; }
+    .mode .number { color: var(--orange); font-weight: 950; }
+    .mode h3 { margin: 10px 0 8px; font-size: 1.28rem; }
+    .mode p { margin: 0; color: var(--muted); }
+    .files { padding: 28px; }
+    pre { margin: 0; overflow-x: auto; color: #d8f99b; font: .91rem/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .note { margin-top: 20px; color: var(--muted); font-size: .92rem; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0 42px; color: var(--muted); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 22px; flex-wrap: wrap; }
+    [data-lang] { display: none; }
+    html[data-current-lang="zh"] [data-lang="zh"], html[data-current-lang="en"] [data-lang="en"] { display: revert; }
+    @media (max-width: 800px) {
+      main { padding-top: 48px; }
+      .pain, .modes { grid-template-columns: 1fr; }
+      .ideas { grid-template-columns: 1fr; }
+      .pain article { min-height: auto; }
+      header .brand span:last-child { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .button:hover { transform: none; }
+    }
+  </style>
+  <script>
+    (function () {
+      var saved;
+      try { saved = localStorage.getItem('pm-skill-lang'); } catch (_) {}
+      var lang = saved === 'zh' || saved === 'en' ? saved : (navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+      document.documentElement.dataset.currentLang = lang;
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    }());
+  </script>
+</head>
+<body>
+  <noscript><style>[data-lang]{display:block!important}.lang-toggle{display:none}</style></noscript>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top"><span class="mark" aria-hidden="true">↗</span><span>Project Management Skill</span></a>
+      <div class="lang-toggle" aria-label="Language / 语言">
+        <button type="button" data-set-lang="zh">中文</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <div data-lang="zh">
+        <p class="eyebrow">本地事实层 · 多 Agent 接力 · 可追溯开发</p>
+        <h1>你的项目，<span class="accent">不该死在聊天记录里。</span></h1>
+        <p class="lead">你是否还在为切换多个 AI 后无法连续工作而苦恼？是否担心账号变化后，目标、规划和开发过程无处追溯？把项目记忆放回项目文件夹，让下一位 Agent 不看上一段聊天，也能找到继续工作的起点。</p>
+        <div class="actions">
+          <a class="button primary" href="docs/installation.zh-CN.md">立即安装</a>
+          <a class="button" href="#modes">查看三种模式</a>
+          <a class="button" href="https://github.com/liyangbai-hub/project-management-skill">打开 GitHub</a>
+        </div>
+      </div>
+      <div data-lang="en">
+        <p class="eyebrow">Local facts · Multi-Agent relay · Traceable work</p>
+        <h1>Your project <span class="accent">should not die in a chat history.</span></h1>
+        <p class="lead">Still rebuilding context every time you switch AI tools? Worried that plans, decisions, and development history will vanish with an account or chat window? Put durable project memory back inside the project folder, so the next Agent can find a verified continuation point without reading the previous conversation.</p>
+        <div class="actions">
+          <a class="button primary" href="docs/installation.en.md">Install now</a>
+          <a class="button" href="#modes">Explore the modes</a>
+          <a class="button" href="https://github.com/liyangbai-hub/project-management-skill">Open GitHub</a>
+        </div>
+      </div>
+
+      <section class="pain" aria-label="Problems">
+        <article>
+          <strong data-lang="zh">换一个 AI，又要从头解释？</strong><strong data-lang="en">New AI, same context rebuild?</strong>
+          <p data-lang="zh">标准文件告诉接手者项目是什么、做到了哪里、下一步是什么。</p><p data-lang="en">Standard files show what the project is, where work stopped, and what comes next.</p>
+        </article>
+        <article>
+          <strong data-lang="zh">聊天消失，项目历史也消失？</strong><strong data-lang="en">Chat gone, project history gone?</strong>
+          <p data-lang="zh">计划、决策、验证和偏差留在本地，随 ZIP 或 Git 一起迁移。</p><p data-lang="en">Plans, decisions, validation, and deviations stay local and travel with ZIP or Git.</p>
+        </article>
+        <article>
+          <strong data-lang="zh">修 Bug 时找不到来龙去脉？</strong><strong data-lang="en">No trail when a bug returns?</strong>
+          <p data-lang="zh">工作单元和审查证据彼此关联，让问题、修复和回归都可追溯。</p><p data-lang="en">Linked work units and audit evidence make defects, fixes, and regressions traceable.</p>
+        </article>
+      </section>
+
+      <section class="section" id="ideas">
+        <div data-lang="zh"><h2>两个核心观点</h2><p class="section-intro">不把 AI 当项目数据库，而把 AI 变成读取同一份本地事实、可以互相接力的执行者。</p></div>
+        <div data-lang="en"><h2>Two core ideas</h2><p class="section-intro">Do not turn an AI chat into the project database. Let different Agents work from the same durable local facts.</p></div>
+        <div class="ideas">
+          <article class="card idea">
+            <h3 data-lang="zh">把项目核心规划以及工作事项留在本地文件夹，而不是 AI 的聊天记录</h3>
+            <h3 data-lang="en">Keep core project plans and work records in the local folder—not in AI chat history</h3>
+            <p data-lang="zh">项目目标、状态、计划、决策和验证证据属于项目本身。更换账号、电脑、系统或服务，它们依然存在。</p>
+            <p data-lang="en">Goals, status, plans, decisions, and validation evidence belong to the project. They survive account, computer, OS, and service changes.</p>
+          </article>
+          <article class="card idea">
+            <h3 data-lang="zh">多个 Agent 按照标准化项目规范接力工作，最大化使用多家订阅额度</h3>
+            <h3 data-lang="en">Standardize multi-Agent handoffs and make the most of multiple AI subscriptions</h3>
+            <p data-lang="zh">Claude Code、Codex、其他 Agent 或小伙伴通过统一入口接力，减少反复重建上下文的额度浪费。它不会绕过任何平台条款或配额。</p>
+            <p data-lang="en">Claude Code, Codex, other Agents, or teammates continue through one shared protocol, reducing quota wasted on repeated context reconstruction. It never bypasses provider terms or limits.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="modes">
+        <div data-lang="zh"><h2>三种模式，一套事实真源</h2><p class="section-intro">规范的是项目事实和接力方式，不是强迫所有项目采用同一种源码目录。</p></div>
+        <div data-lang="en"><h2>Three modes, one source of project truth</h2><p class="section-intro">It standardizes project facts and handoffs—not every framework's source layout.</p></div>
+        <div class="modes">
+          <article class="card mode"><span class="number">01</span><h3 data-lang="zh">创建受管项目</h3><h3 data-lang="en">Create a managed project</h3><p data-lang="zh">先建立可信的本地事实层，再按项目原生工具链开展工作。</p><p data-lang="en">Establish a trustworthy local fact layer before substantive work begins.</p></article>
+          <article class="card mode"><span class="number">02</span><h3 data-lang="zh">标准化副本重构</h3><h3 data-lang="en">Build a standardized copy</h3><p data-lang="zh">只读理解旧项目，在独立路径创建可验证副本，并证明源项目未变。</p><p data-lang="en">Read the legacy source, create an independent validated copy, and prove the source stayed unchanged.</p></article>
+          <article class="card mode"><span class="number">03</span><h3 data-lang="zh">证据化审查</h3><h3 data-lang="en">Evidence-based review</h3><p data-lang="zh">用具体失败场景、反证和真实验证区分缺陷、疑似项与建议。</p><p data-lang="en">Separate defects, uncertain findings, and recommendations through failure scenarios and evidence.</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div data-lang="zh"><h2>接力所需的文件，就在项目里</h2></div>
+        <div data-lang="en"><h2>The handoff lives inside the project</h2></div>
+        <div class="card files"><pre>&lt;project-root&gt;/
+├── AGENTS.md              # 工作协议 / working agreement
+├── CLAUDE.md              # Claude Code 入口 / entry pointer
+├── README.md              # 当前项目地图 / current project map
+├── DEVLOG.md              # 计划、结果、偏差 / plans and results
+├── CHANGELOG.md           # 已落地变化 / shipped changes
+├── requirements/INDEX.md  # 输入材料状态 / source-material status
+└── AUDIT.md               # 证据化审查历史 / audit history</pre></div>
+        <p class="note" data-lang="zh">按需创建，不机械堆空文件。文档负责导航；关键行为仍须回到实际代码、配置和命令核验。</p>
+        <p class="note" data-lang="en">Files are created only when meaningful. Documentation navigates; actual code, configuration, and commands still verify behavior.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer><div class="wrap"><span>MIT · © 2026 liyangbai-hub</span><span><a href="README.zh-CN.md">中文 README</a> · <a href="README.md">English README</a> · <a href="LICENSE">License</a></span></div></footer>
+
+  <script>
+    (function () {
+      function setLanguage(lang) {
+        document.documentElement.dataset.currentLang = lang;
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = lang === 'zh' ? '项目管理技能 · 让多个 Agent 接力同一项目' : 'Project Management Skill · Durable Multi-Agent Handoffs';
+        document.querySelectorAll('[data-set-lang]').forEach(function (button) {
+          button.setAttribute('aria-pressed', String(button.dataset.setLang === lang));
+        });
+        try { localStorage.setItem('pm-skill-lang', lang); } catch (_) {}
+      }
+      document.querySelectorAll('[data-set-lang]').forEach(function (button) {
+        button.addEventListener('click', function () { setLanguage(button.dataset.setLang); });
+      });
+      setLanguage(document.documentElement.dataset.currentLang || 'zh');
+    }());
+  </script>
+</body>
+</html>

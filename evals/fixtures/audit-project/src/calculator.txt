@@ -1,0 +1,10 @@
+# Synthetic Calculator
+
+function percentage_change(start, end):
+    return (end - start) / start * 100
+
+Expected behavior:
+- start=100, end=110 returns 10.
+- start=0 must return a validation error such as `invalid start value`; it must not attempt division by zero.
+
+Known fixture condition: the pseudocode has no zero-start guard. Reviewers must verify the failure path before reporting it and must not modify this file during a read-only review.
